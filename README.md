@@ -1,12 +1,10 @@
-# Threads Viewer
+# Thread List
 
 This is a plugin for [Aroma](https://github.com/wiiu-env/Aroma) that shows a list of active threads in the plugin menu.
 
-**Note: This code is new and likely to break and have problems. It is a bit messy with excessive NULL checks. It will be cleaned up soon.**
-
 ## Installation
 
-1. Copy the file `ThreadsViewer.wps` into `sd:/wiiu/environments/aroma/plugins`.
+1. Copy the file `ThreadList.wps` into `sd:/wiiu/environments/aroma/plugins`.
 2. Requires the [WiiUPluginLoaderBackend](https://github.com/wiiu-env/WiiUPluginLoaderBackend) in `sd:/wiiu/environments/aroma/modules`.
 
 Start Aroma and the backend should load the plugin.
