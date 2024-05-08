@@ -1,10 +1,12 @@
-# Thread List
+# Thred List
 
 This is a plugin for [Aroma](https://github.com/wiiu-env/Aroma) that shows a list of active threads in the plugin menu.
 
+It is called "Thred List" instead of "Thread" because Nintendo mispelled "Thread" for "Thred" in the thread for the Eula (EulaThred). One interpretation is that they were too focused on telling people not to install CFW they didn't check their spelling.
+
 ## Installation
 
-1. Copy the file `ThreadList.wps` into `sd:/wiiu/environments/aroma/plugins`.
+1. Copy the file `ThredList.wps` into `sd:/wiiu/environments/aroma/plugins`.
 2. Requires the [WiiUPluginLoaderBackend](https://github.com/wiiu-env/WiiUPluginLoaderBackend) in `sd:/wiiu/environments/aroma/modules`.
 
 Start Aroma and the backend should load the plugin.

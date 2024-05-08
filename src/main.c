@@ -9,14 +9,14 @@
     Mandatory plugin information.
     If not set correctly, the loader will refuse to use the plugin.
 **/
-WUPS_PLUGIN_NAME("Thread List");
+WUPS_PLUGIN_NAME("Thred List");
 WUPS_PLUGIN_DESCRIPTION("Displays a list of active threads");
 WUPS_PLUGIN_VERSION("v1.0");
 WUPS_PLUGIN_AUTHOR("ItzSwirlz, Maschell");
 WUPS_PLUGIN_LICENSE("BSD");
 
 WUPS_USE_WUT_DEVOPTAB();         // Use the wut devoptabs
-WUPS_USE_STORAGE("thread_list"); // Unique id for the storage api
+WUPS_USE_STORAGE("thred_list"); // Unique id for the storage api
 
 WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle root) {
     {
@@ -80,9 +80,9 @@ void ConfigMenuClosedCallback() {
 INITIALIZE_PLUGIN() {
     // Logging only works when compiled with `make DEBUG=1`. See the README for more information.
     initLogging();
-    DEBUG_FUNCTION_LINE("INITIALIZE_PLUGIN of thread_list!");
+    DEBUG_FUNCTION_LINE("INITIALIZE_PLUGIN of thred_list!");
 
-    WUPSConfigAPIOptionsV1 configOptions = {.name = "Thread List"};
+    WUPSConfigAPIOptionsV1 configOptions = {.name = "Thred List"};
     if (WUPSConfigAPI_Init(configOptions, ConfigMenuOpenedCallback, ConfigMenuClosedCallback) != WUPSCONFIG_API_RESULT_SUCCESS) {
         DEBUG_FUNCTION_LINE_ERR("Failed to init config api");
     }
@@ -96,7 +96,7 @@ INITIALIZE_PLUGIN() {
     Gets called when the plugin will be unloaded.
 **/
 DEINITIALIZE_PLUGIN() {
-    DEBUG_FUNCTION_LINE("DEINITIALIZE_PLUGIN of thread_list!");
+    DEBUG_FUNCTION_LINE("DEINITIALIZE_PLUGIN of thred_list!");
 }
 
 /**
@@ -105,7 +105,7 @@ DEINITIALIZE_PLUGIN() {
 ON_APPLICATION_START() {
     initLogging();
 
-    DEBUG_FUNCTION_LINE("ON_APPLICATION_START of thread_list!");
+    DEBUG_FUNCTION_LINE("ON_APPLICATION_START of thred_list!");
 }
 
 /**
@@ -119,5 +119,5 @@ ON_APPLICATION_ENDS() {
     Gets called when an application request to exit.
 **/
 ON_APPLICATION_REQUESTS_EXIT() {
-    DEBUG_FUNCTION_LINE_INFO("ON_APPLICATION_REQUESTS_EXIT of thread_list!");
+    DEBUG_FUNCTION_LINE_INFO("ON_APPLICATION_REQUESTS_EXIT of thred_list!");
 }
