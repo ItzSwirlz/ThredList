@@ -87,6 +87,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         }
                     }
 
+
                     char attrText[30];
                     if (threads[i]->attr) {
                         switch (threads[i]->attr) {
@@ -117,10 +118,70 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         }
                     }
 
-                    char idText[10];
-                    snprintf(idText, 10, "ID: %d", threads[i]->id);
-                    if (WUPSConfigItemStub_AddToCategory(catHandle, idText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add id of thread %d to its category", threads[i]->id);
+                    char stateText[50];
+                    if (threads[i]->state) {
+                        switch (threads[i]->state) {
+                            case OS_THREAD_STATE_NONE:
+                                snprintf(stateText, 50, "State: None");
+                                break;
+                            case OS_THREAD_STATE_READY:
+                                snprintf(stateText, 50, "State: Ready");
+                                break;
+                            case OS_THREAD_STATE_RUNNING:
+                                snprintf(stateText, 50, "State: Running");
+                                break;
+                            case OS_THREAD_STATE_WAITING:
+                                snprintf(stateText, 50, "State: Waiting (Probably bc WUPS is active)");
+                                break;
+                            case OS_THREAD_STATE_MORIBUND:
+                                snprintf(stateText, 50, "State: Moribund");
+                                break;
+                        }
+                        if (WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                            DEBUG_FUNCTION_LINE_ERR("Failed to add state of thread %d to its category", threads[i]->state);
+                        }
+                    }
+
+                    char priorityText[20];
+                    snprintf(priorityText, 20, "Priority: %d", threads[i]->priority);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, priorityText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add priority of thread %d to its category", threads[i]->priority);
+                    }
+
+                    char basePriorityText[20];
+                    snprintf(basePriorityText, 20, "Base Priority: %d", threads[i]->basePriority);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, basePriorityText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add base priority of thread %d to its category", threads[i]->basePriority);
+                    }
+
+                    char exitValueText[20];
+                    snprintf(exitValueText, 20, "Exit Value: %d", threads[i]->exitValue);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, exitValueText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add exit value of thread %d to its category", threads[i]->exitValue);
+                    }
+
+                    char unk0x610Text[25];
+                    snprintf(unk0x610Text, 25, "unk0x610: %d", threads[i]->unk0x610);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x610Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %d to its category", threads[i]->unk0x610);
+                    }
+
+                    char unk0x618Text[25];
+                    snprintf(unk0x610Text, 25, "unk0x618: %d", threads[i]->unk0x618);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x618Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x618 value of thread %d to its category", threads[i]->unk0x618);
+                    }
+
+                    char unk0x620Text[25];
+                    snprintf(unk0x620Text, 25, "unk0x620: %d", threads[i]->unk0x620);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x620) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %d to its category", threads[i]->unk0x620);
+                    }
+
+                    char unk0x628Text[25];
+                    snprintf(unk0x628Text, 25, "unk0x628: %d", threads[i]->unk0x628);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x628Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %d to its category", threads[i]->unk0x628);
                     }
 
                     if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
