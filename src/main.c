@@ -81,6 +81,9 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                             case OS_THREAD_TYPE_APP:
                                 snprintf(typeText, 30, "Type: App");
                                 break;
+                            default:
+                                snprintf(typeText, 30, "Type Undefined: %d", threads[i]->type);
+                                break;
                         }
                         if (WUPSConfigItemStub_AddToCategory(catHandle, typeText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                             DEBUG_FUNCTION_LINE_ERR("Failed to add type of thread %d to its category", threads[i]->type);
@@ -138,6 +141,9 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                                 break;
                             case OS_THREAD_STATE_MORIBUND:
                                 snprintf(stateText, 50, "State: Moribund");
+                                break;
+                            default:
+                                snprintf(stateText, 50, "State Undefined: %d", threads[i]->state);
                                 break;
                         }
                         if (WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
