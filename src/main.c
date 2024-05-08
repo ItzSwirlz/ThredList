@@ -12,7 +12,7 @@
 **/
 WUPS_PLUGIN_NAME("Thred List");
 WUPS_PLUGIN_DESCRIPTION("Displays a list of active threads");
-WUPS_PLUGIN_VERSION("v1.0");
+WUPS_PLUGIN_VERSION("v1.1");
 WUPS_PLUGIN_AUTHOR("ItzSwirlz, Maschell");
 WUPS_PLUGIN_LICENSE("BSD");
 
