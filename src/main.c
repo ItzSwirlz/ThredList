@@ -2,6 +2,7 @@
 #include <coreinit/interrupts.h>
 #include <coreinit/scheduler.h>
 #include <coreinit/thread.h>
+#include <stdio.h>
 #include <wups.h>
 #include <wups/config/WUPSConfigItemStub.h>
 
@@ -27,6 +28,8 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
         }
 
         OSThread *threads[sizeThreads];
+        // WUPSConfigCategoryHandle categoryHandles[sizeThreads];
+        // WUPSConfigAPICreateCategoryOptionsV1 categoryOptions[sizeThreads];
         OSThread *curThread = OSGetCurrentThread();
         int state           = OSDisableInterrupts();
         int i               = 0;
@@ -58,8 +61,46 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
         for (int i = 0; i < sizeThreads; i++) {
             if (threads[i]) {
                 if (threads[i]->name) {
-                    if (WUPSConfigItemStub_AddToCategory(root, threads[i]->name) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add thread %d to the list", threads[i]->name);
+                    WUPSConfigCategoryHandle catHandle;
+                    WUPSConfigAPICreateCategoryOptionsV1 catOp = {.name = threads[i]->name};
+
+                    if(WUPSConfigAPI_Category_Create(catOp, &catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to create category for thread %d", threads[i]->name);
+                        return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
+                    }
+
+                    char typeText[30];
+                    if(threads[i]->type) {
+                        snprintf(typeText, 30, "Type: %d", threads[i]->type);
+                        if(WUPSConfigItemStub_AddToCategory(catHandle, typeText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                            DEBUG_FUNCTION_LINE_ERR("Failed to add type of thread %d to its category", threads[i]->type);
+                        }
+                    }
+
+                    char stateText[30];
+                    if(threads[i]->state) {
+                        snprintf(stateText, 30, "State: %d", threads[i]->state);
+                        if(WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                            DEBUG_FUNCTION_LINE_ERR("Failed to add state of thread %d to its category", threads[i]->state);
+                        }
+                    }
+
+                    char attrText[30];
+                    if(threads[i]->attr) {
+                        snprintf(attrText, 30, "Attributes: %d", threads[i]->attr);
+                        if(WUPSConfigItemStub_AddToCategory(catHandle, attrText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                            DEBUG_FUNCTION_LINE_ERR("Failed to add attributes of thread %d to its category", threads[i]->attr);
+                        }
+                    }
+
+                    char idText[10];
+                    snprintf(idText, 10, "ID: %d", threads[i]->id);
+                    if(WUPSConfigItemStub_AddToCategory(catHandle, idText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add id of thread %d to its category", threads[i]->id);
+                    }
+
+                    if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add thread category %d to the list", threads[i]->name);
                         return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
                     };
                 }
