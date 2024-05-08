@@ -112,6 +112,9 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                             case OS_THREAD_ATTRIB_UNKNOWN:
                                 snprintf(attrText, 30, "Attribute: Unknown");
                                 break;
+                            default:
+                                snprintf(attrText, 30, "Attribute Undefined: %d", threads[i]->attr);
+                                break;
                         }
                         if (WUPSConfigItemStub_AddToCategory(catHandle, attrText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                             DEBUG_FUNCTION_LINE_ERR("Failed to add attributes of thread %d to its category", threads[i]->attr);
@@ -175,13 +178,13 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     char unk0x620Text[25];
                     snprintf(unk0x620Text, 25, "unk0x620: %lld", threads[i]->unk0x620);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x620Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %lld to its category", threads[i]->unk0x620);
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x620 value of thread %lld to its category", threads[i]->unk0x620);
                     }
 
                     char unk0x628Text[25];
                     snprintf(unk0x628Text, 25, "unk0x628: %lld", threads[i]->unk0x628);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x628Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %lld to its category", threads[i]->unk0x628);
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x628 value of thread %lld to its category", threads[i]->unk0x628);
                     }
 
                     if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
