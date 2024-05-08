@@ -161,27 +161,27 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     }
 
                     char unk0x610Text[25];
-                    snprintf(unk0x610Text, 25, "unk0x610: %d", threads[i]->unk0x610);
+                    snprintf(unk0x610Text, 25, "unk0x610: %lld", threads[i]->unk0x610);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x610Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %d to its category", threads[i]->unk0x610);
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %lld to its category", threads[i]->unk0x610);
                     }
 
                     char unk0x618Text[25];
-                    snprintf(unk0x610Text, 25, "unk0x618: %d", threads[i]->unk0x618);
+                    snprintf(unk0x610Text, 25, "unk0x618: %lld", threads[i]->unk0x618);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x618Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x618 value of thread %d to its category", threads[i]->unk0x618);
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x618 value of thread %lld to its category", threads[i]->unk0x618);
                     }
 
                     char unk0x620Text[25];
-                    snprintf(unk0x620Text, 25, "unk0x620: %d", threads[i]->unk0x620);
-                    if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x620) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %d to its category", threads[i]->unk0x620);
+                    snprintf(unk0x620Text, 25, "unk0x620: %lld", threads[i]->unk0x620);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x620Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %lld to its category", threads[i]->unk0x620);
                     }
 
                     char unk0x628Text[25];
-                    snprintf(unk0x628Text, 25, "unk0x628: %d", threads[i]->unk0x628);
+                    snprintf(unk0x628Text, 25, "unk0x628: %lld", threads[i]->unk0x628);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x628Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %d to its category", threads[i]->unk0x628);
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %lld to its category", threads[i]->unk0x628);
                     }
 
                     if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
