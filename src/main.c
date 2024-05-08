@@ -70,24 +70,22 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     }
 
                     char typeText[30];
-                    if (threads[i]->type) {
-                        switch (threads[i]->type) {
-                            case OS_THREAD_TYPE_DRIVER:
-                                snprintf(typeText, 30, "Type: Driver");
-                                break;
-                            case OS_THREAD_TYPE_IO:
-                                snprintf(typeText, 30, "Type: I/O");
-                                break;
-                            case OS_THREAD_TYPE_APP:
-                                snprintf(typeText, 30, "Type: App");
-                                break;
-                            default:
-                                snprintf(typeText, 30, "Type Undefined: %d", threads[i]->type);
-                                break;
-                        }
-                        if (WUPSConfigItemStub_AddToCategory(catHandle, typeText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                            DEBUG_FUNCTION_LINE_ERR("Failed to add type of thread %d to its category", threads[i]->type);
-                        }
+                    switch (threads[i]->type) {
+                        case OS_THREAD_TYPE_DRIVER:
+                            snprintf(typeText, 30, "Type: Driver");
+                            break;
+                        case OS_THREAD_TYPE_IO:
+                            snprintf(typeText, 30, "Type: I/O");
+                            break;
+                        case OS_THREAD_TYPE_APP:
+                            snprintf(typeText, 30, "Type: App");
+                            break;
+                        default:
+                            snprintf(typeText, 30, "Type Undefined: %d", threads[i]->type);
+                            break;
+                    }
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, typeText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add type of thread %d to its category", threads[i]->type);
                     }
 
 
