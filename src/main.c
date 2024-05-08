@@ -87,30 +87,6 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         }
                     }
 
-                    char stateText[30];
-                    if (threads[i]->state) {
-                        switch (threads[i]->state) {
-                            case OS_THREAD_STATE_NONE:
-                                snprintf(stateText, 30, "State: None");
-                                break;
-                            case OS_THREAD_STATE_READY:
-                                snprintf(stateText, 30, "State: Ready");
-                                break;
-                            case OS_THREAD_STATE_RUNNING:
-                                snprintf(stateText, 30, "State: Running");
-                                break;
-                            case OS_THREAD_STATE_WAITING:
-                                snprintf(stateText, 30, "State: Waiting");
-                                break;
-                            case OS_THREAD_STATE_MORIBUND:
-                                snprintf(stateText, 30, "State: Moribund");
-                                break;
-                        }
-                        if (WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                            DEBUG_FUNCTION_LINE_ERR("Failed to add state of thread %d to its category", threads[i]->state);
-                        }
-                    }
-
                     char attrText[30];
                     if (threads[i]->attr) {
                         switch (threads[i]->attr) {
