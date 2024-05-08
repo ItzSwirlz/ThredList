@@ -90,63 +90,59 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
 
 
                     char attrText[30];
-                    if (threads[i]->attr) {
-                        switch (threads[i]->attr) {
-                            case OS_THREAD_ATTRIB_AFFINITY_CPU0:
-                                snprintf(attrText, 30, "Attribute: Affinity CPU 0");
-                                break;
-                            case OS_THREAD_ATTRIB_AFFINITY_CPU1:
-                                snprintf(attrText, 30, "Attribute: Affinity CPU 1");
-                                break;
-                            case OS_THREAD_ATTRIB_AFFINITY_CPU2:
-                                snprintf(attrText, 30, "Attribute: Affinity CPU 2");
-                                break;
-                            case OS_THREAD_ATTRIB_AFFINITY_ANY:
-                                snprintf(attrText, 30, "Attribute: Affinity Any");
-                                break;
-                            case OS_THREAD_ATTRIB_DETACHED:
-                                snprintf(attrText, 30, "Attribute: Detached");
-                                break;
-                            case OS_THREAD_ATTRIB_STACK_USAGE:
-                                snprintf(attrText, 30, "Attribute: Stack Usage");
-                                break;
-                            case OS_THREAD_ATTRIB_UNKNOWN:
-                                snprintf(attrText, 30, "Attribute: Unknown");
-                                break;
-                            default:
-                                snprintf(attrText, 30, "Attribute Undefined: %d", threads[i]->attr);
-                                break;
-                        }
-                        if (WUPSConfigItemStub_AddToCategory(catHandle, attrText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                            DEBUG_FUNCTION_LINE_ERR("Failed to add attributes of thread %d to its category", threads[i]->attr);
-                        }
+                    switch (threads[i]->attr) {
+                        case OS_THREAD_ATTRIB_AFFINITY_CPU0:
+                            snprintf(attrText, 30, "Attribute: Affinity CPU 0");
+                            break;
+                        case OS_THREAD_ATTRIB_AFFINITY_CPU1:
+                            snprintf(attrText, 30, "Attribute: Affinity CPU 1");
+                            break;
+                        case OS_THREAD_ATTRIB_AFFINITY_CPU2:
+                            snprintf(attrText, 30, "Attribute: Affinity CPU 2");
+                            break;
+                        case OS_THREAD_ATTRIB_AFFINITY_ANY:
+                            snprintf(attrText, 30, "Attribute: Affinity Any");
+                            break;
+                        case OS_THREAD_ATTRIB_DETACHED:
+                            snprintf(attrText, 30, "Attribute: Detached");
+                            break;
+                        case OS_THREAD_ATTRIB_STACK_USAGE:
+                            snprintf(attrText, 30, "Attribute: Stack Usage");
+                            break;
+                        case OS_THREAD_ATTRIB_UNKNOWN:
+                            snprintf(attrText, 30, "Attribute: Unknown");
+                            break;
+                        default:
+                            snprintf(attrText, 30, "Attribute Undefined: %d", threads[i]->attr);
+                            break;
+                    }
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, attrText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add attributes of thread %d to its category", threads[i]->attr);
                     }
 
                     char stateText[50];
-                    if (threads[i]->state) {
-                        switch (threads[i]->state) {
-                            case OS_THREAD_STATE_NONE:
-                                snprintf(stateText, 50, "State: None");
-                                break;
-                            case OS_THREAD_STATE_READY:
-                                snprintf(stateText, 50, "State: Ready");
-                                break;
-                            case OS_THREAD_STATE_RUNNING:
-                                snprintf(stateText, 50, "State: Running");
-                                break;
-                            case OS_THREAD_STATE_WAITING:
-                                snprintf(stateText, 50, "State: Waiting (Probably bc WUPS is active)");
-                                break;
-                            case OS_THREAD_STATE_MORIBUND:
-                                snprintf(stateText, 50, "State: Moribund");
-                                break;
-                            default:
-                                snprintf(stateText, 50, "State Undefined: %d", threads[i]->state);
-                                break;
-                        }
-                        if (WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                            DEBUG_FUNCTION_LINE_ERR("Failed to add state of thread %d to its category", threads[i]->state);
-                        }
+                    switch (threads[i]->state) {
+                        case OS_THREAD_STATE_NONE:
+                            snprintf(stateText, 50, "State: None");
+                            break;
+                        case OS_THREAD_STATE_READY:
+                            snprintf(stateText, 50, "State: Ready");
+                            break;
+                        case OS_THREAD_STATE_RUNNING:
+                            snprintf(stateText, 50, "State: Running");
+                            break;
+                        case OS_THREAD_STATE_WAITING:
+                            snprintf(stateText, 50, "State: Waiting (Probably bc WUPS is active)");
+                            break;
+                        case OS_THREAD_STATE_MORIBUND:
+                            snprintf(stateText, 50, "State: Moribund");
+                            break;
+                        default:
+                            snprintf(stateText, 50, "State Undefined: %d", threads[i]->state);
+                            break;
+                    }
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add state of thread %d to its category", threads[i]->state);
                     }
 
                     char priorityText[20];
