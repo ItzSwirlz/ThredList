@@ -167,7 +167,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     }
 
                     char unk0x618Text[25];
-                    snprintf(unk0x610Text, 25, "unk0x618: %lld", threads[i]->unk0x618);
+                    snprintf(unk0x618Text, 25, "unk0x618: %lld", threads[i]->unk0x618);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x618Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
                         DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x618 value of thread %lld to its category", threads[i]->unk0x618);
                     }
