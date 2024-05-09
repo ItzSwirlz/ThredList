@@ -1,4 +1,4 @@
-![](https://github.com/RISC-VLIW/ThredList/blob/main/src/banner.svg)
+<p><img src="https://github.com/RISC-VLIW/ThredList/blob/main/src/banner.svg" width=30% height=30% /></p>
 
 # Thred List
 
