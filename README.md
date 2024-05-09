@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/RISC-VLIW/ThredList/blob/main/src/banner.svg" width=60% height=60% /></p>
+<p align="center"><img src="https://github.com/ItzSwirlz/ThredList/blob/main/.github/banner.svg" width=60% height=60% /></p>
 
 # Thred List
 
@@ -56,6 +56,7 @@ docker run -it --rm -v ${PWD}:/project thredlist-builder make clean
 `docker run --rm -v ${PWD}:/src ghcr.io/wiiu-env/clang-format:13.0.0-2 -r ./src -i`
 
 ## Credits
+
 - Maschell, for identifying active thread list address
 - RISC-VLIW for banner
 - You!
