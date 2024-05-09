@@ -1,3 +1,5 @@
+![](https://github.com/RISC-VLIW/ThredList/assets/167657592/cd78938a-beb2-47f2-8d62-192971022f93)
+
 # Thred List
 
 This is a plugin for [Aroma](https://github.com/wiiu-env/Aroma) that shows a list of active threads in the plugin menu.
