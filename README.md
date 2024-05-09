@@ -1,4 +1,4 @@
-<p><img src="https://github.com/RISC-VLIW/ThredList/blob/main/src/banner.svg" width=30% height=30% /></p>
+<p align="center"><img src="https://github.com/RISC-VLIW/ThredList/blob/main/src/banner.svg" width=60% height=60% /></p>
 
 # Thred List
 
@@ -45,12 +45,17 @@ It's possible to use a docker image for building. This way you don't need anythi
 docker build . -t example-plugin-builder
 
 # make
-docker run -it --rm -v ${PWD}:/project example-plugin-builder make DEBUG=1
+docker run -it --rm -v ${PWD}:/project thredlist-builder make DEBUG=1
 
 # make clean
-docker run -it --rm -v ${PWD}:/project example-plugin-builder make clean
+docker run -it --rm -v ${PWD}:/project thredlist-builder make clean
 ```
 
 ## Format the code via docker
 
 `docker run --rm -v ${PWD}:/src ghcr.io/wiiu-env/clang-format:13.0.0-2 -r ./src -i`
+
+## Credits
+- Maschell, for identifying active thread list address
+- RISC-VLIW for banner
+- You!
