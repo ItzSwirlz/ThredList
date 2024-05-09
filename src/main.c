@@ -157,6 +157,15 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         DEBUG_FUNCTION_LINE_ERR("Failed to add base priority of thread %d to its category", threads[i]->basePriority);
                     }
 
+                    // most threads probably have no tls sections so only show on ones have them
+                    if (threads[i]->tlsSectionCount) {
+                        char tlsSectionText[20];
+                        snprintf(tlsSectionText, 20, "TLS Sections: %d", threads[i]->tlsSectionCount);
+                        if (WUPSConfigItemStub_AddToCategory(catHandle, tlsSectionText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                            DEBUG_FUNCTION_LINE_ERR("Failed to add tls section count to its category", threads[i]->tlsSectionCount);
+                        }
+                    }
+
                     char exitValueText[20];
                     snprintf(exitValueText, 20, "Exit Value: %d", threads[i]->exitValue);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, exitValueText) != WUPSCONFIG_API_RESULT_SUCCESS) {
