@@ -162,7 +162,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         char tlsSectionText[20];
                         snprintf(tlsSectionText, 20, "TLS Sections: %d", threads[i]->tlsSectionCount);
                         if (WUPSConfigItemStub_AddToCategory(catHandle, tlsSectionText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                            DEBUG_FUNCTION_LINE_ERR("Failed to add tls section count to its category", threads[i]->tlsSectionCount);
+                            DEBUG_FUNCTION_LINE_ERR("Failed to add tls section count %d to its category", threads[i]->tlsSectionCount);
                         }
                     }
 
