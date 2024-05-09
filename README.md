@@ -1,4 +1,4 @@
-![](https://github.com/RISC-VLIW/ThredList/assets/167657592/cd78938a-beb2-47f2-8d62-192971022f93)
+![](https://github.com/RISC-VLIW/ThredList/blob/main/src/banner.svg)
 
 # Thred List
 
