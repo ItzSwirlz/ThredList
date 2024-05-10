@@ -31,9 +31,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
             return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
         }
 
-        OSThread *threads[sizeThreads];
-        // WUPSConfigCategoryHandle categoryHandles[sizeThreads];
-        // WUPSConfigAPICreateCategoryOptionsV1 categoryOptions[sizeThreads];
+        OSThread *threads[sizeThreads]; // TODO: if we're in C++ is there a smarter way to handle the thread linked list?
         OSThread *curThread = OSGetCurrentThread();
         int state           = OSDisableInterrupts();
         int i               = 0;
@@ -65,14 +63,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
         for (int i = 0; i < sizeThreads; i++) {
             if (threads[i]) {
                 if (threads[i]->name) {
-                    WUPSConfigCategoryHandle catHandle;
-                    WUPSConfigCategory threadCat = WUPSConfigCategory(catHandle);
-                    WUPSConfigAPICreateCategoryOptionsV1 catOp = {.name = threads[i]->name};
-
-                    if (WUPSConfigAPI_Category_Create(catOp, &catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to create category for thread %d", threads[i]->name);
-                        return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
-                    }
+                    WUPSConfigCategory threadCat = WUPSConfigCategory::Create(threads[i]->name);
 
                     string typeText = "Type: ";
                     switch (threads[i]->type) {
@@ -159,10 +150,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     threadCat.add(WUPSConfigItemStub::Create("OSTimer unk0x620: " + threads[i]->unk0x620));
                     threadCat.add(WUPSConfigItemStub::Create("OSTimer unk0x628: " + threads[i]->unk0x628));
 
-                    if (WUPSConfigAPI_Category_AddCategory(rootHandle, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add thread category %d to the list", threads[i]->name);
-                        return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
-                    };
+                    root.add(move(threadCat));
                 }
             }
         }
