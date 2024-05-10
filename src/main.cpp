@@ -2,9 +2,12 @@
 #include <coreinit/interrupts.h>
 #include <coreinit/scheduler.h>
 #include <coreinit/thread.h>
+#include <string.h>
 #include <stdio.h>
 #include <wups.h>
 #include <wups/config/WUPSConfigItemStub.h>
+
+using namespace std;
 
 /**
     Mandatory plugin information.
@@ -19,8 +22,9 @@ WUPS_PLUGIN_LICENSE("BSD");
 WUPS_USE_WUT_DEVOPTAB();        // Use the wut devoptabs
 WUPS_USE_STORAGE("thred_list"); // Unique id for the storage api
 
-WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle root) {
+WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle rootHandle) {
     {
+        WUPSConfigCategory root = WUPSConfigCategory(rootHandle);
         int sizeThreads = OSCheckActiveThreads();
         if (sizeThreads == 0) {
             DEBUG_FUNCTION_LINE_ERR("OSCheckActiveThreads() claims no threads are running. This should never happen.");
@@ -62,6 +66,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
             if (threads[i]) {
                 if (threads[i]->name) {
                     WUPSConfigCategoryHandle catHandle;
+                    WUPSConfigCategory threadCat = WUPSConfigCategory(catHandle);
                     WUPSConfigAPICreateCategoryOptionsV1 catOp = {.name = threads[i]->name};
 
                     if (WUPSConfigAPI_Category_Create(catOp, &catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
@@ -69,24 +74,22 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
                     }
 
-                    char typeText[30];
+                    string typeTextCpp = "Type: ";
                     switch (threads[i]->type) {
                         case OS_THREAD_TYPE_DRIVER:
-                            snprintf(typeText, 30, "Type: Driver");
+                            typeTextCpp += "Driver";
                             break;
                         case OS_THREAD_TYPE_IO:
-                            snprintf(typeText, 30, "Type: I/O");
+                            typeTextCpp += "I/O";
                             break;
                         case OS_THREAD_TYPE_APP:
-                            snprintf(typeText, 30, "Type: App");
+                            typeTextCpp += "App";
                             break;
                         default:
-                            snprintf(typeText, 30, "Type Undefined: %d", threads[i]->type);
+                            typeTextCpp += "Undefined: " + threads[i]->type;
                             break;
                     }
-                    if (WUPSConfigItemStub_AddToCategory(catHandle, typeText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                        DEBUG_FUNCTION_LINE_ERR("Failed to add type of thread %d to its category", threads[i]->type);
-                    }
+                    threadCat.add(WUPSConfigItemStub::Create(typeTextCpp));
 
 
                     char attrText[30];
@@ -196,7 +199,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x628 value of thread %lld to its category", threads[i]->unk0x628);
                     }
 
-                    if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                    if (WUPSConfigAPI_Category_AddCategory(rootHandle, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
                         DEBUG_FUNCTION_LINE_ERR("Failed to add thread category %d to the list", threads[i]->name);
                         return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
                     };
