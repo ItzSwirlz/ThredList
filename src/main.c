@@ -1,5 +1,7 @@
 #include "utils/logger.h"
+#include <coreinit/fastmutex.h>
 #include <coreinit/interrupts.h>
+#include <coreinit/mutex.h>
 #include <coreinit/scheduler.h>
 #include <coreinit/thread.h>
 #include <stdio.h>
@@ -195,6 +197,41 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x628Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
                         DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x628 value of thread %lld to its category", threads[i]->unk0x628);
                     }
+
+                    WUPSConfigCategoryHandle mutexCatHandle;
+                    WUPSConfigAPICreateCategoryOptionsV1 mutexCatOp = {.name = "Mutexes"};
+
+                    OSMutex *m = threads[i]->mutex;
+                    WUPSConfigAPI_Category_Create(mutexCatOp, &mutexCatHandle);
+                    while (m) {
+                        if (m->name != NULL) {
+                            WUPSConfigItemStub_AddToCategory(mutexCatHandle, "Unnamed Mutex");
+                        } else {
+                            WUPSConfigItemStub_AddToCategory(mutexCatHandle, m->name);
+                        }
+                        m = m->link.next;
+                    }
+                    WUPSConfigAPI_Category_AddCategory(catHandle, mutexCatHandle);
+
+                    // ----
+                    // fast mutexes
+                    //
+                    WUPSConfigCategoryHandle fastMutexCatHandle;
+                    WUPSConfigAPICreateCategoryOptionsV1 fastMutexCatOp = {.name = "Fast Mutexes"};
+
+
+                    OSFastMutex *fm = threads[i]->fastMutex;
+                    WUPSConfigAPI_Category_Create(fastMutexCatOp, &fastMutexCatHandle);
+                    while (fm) {
+                        if (fm->name != NULL) {
+                            WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, "Unnamed Fast Mutex");
+                        } else {
+                            WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, fm->name);
+                        }
+                        fm = fm->link.next;
+                    }
+                    WUPSConfigAPI_Category_AddCategory(catHandle, fastMutexCatHandle);
+
 
                     if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
                         DEBUG_FUNCTION_LINE_ERR("Failed to add thread category %d to the list", threads[i]->name);
