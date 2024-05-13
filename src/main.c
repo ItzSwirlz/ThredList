@@ -5,6 +5,7 @@
 #include <coreinit/scheduler.h>
 #include <coreinit/thread.h>
 #include <stdio.h>
+#include <string.h>
 #include <wups.h>
 #include <wups/config/WUPSConfigItemStub.h>
 
@@ -64,6 +65,9 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
             if (threads[i]) {
                 if (threads[i]->name) {
                     WUPSConfigCategoryHandle catHandle;
+                    if(strcmp(threads[i]->name, "") == 0) {
+                        threads[i]->name = "Unnamed Thread";
+                    }
                     WUPSConfigAPICreateCategoryOptionsV1 catOp = {.name = threads[i]->name};
 
                     if (WUPSConfigAPI_Category_Create(catOp, &catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
