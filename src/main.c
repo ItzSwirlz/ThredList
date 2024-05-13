@@ -174,6 +174,12 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         DEBUG_FUNCTION_LINE_ERR("Failed to add exit value of thread %d to its category", threads[i]->exitValue);
                     }
 
+                    char wakeCountText[24];
+                    snprintf(wakeCountText, 24, "Wake Count: %lld", threads[i]->wakeCount);
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, wakeCountText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add wake count of thread %d to its category", threads[i]->wakeCount);
+                    }
+
                     char unk0x610Text[25];
                     snprintf(unk0x610Text, 25, "unk0x610: %lld", threads[i]->unk0x610);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x610Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
@@ -198,6 +204,9 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x628 value of thread %lld to its category", threads[i]->unk0x628);
                     }
 
+                    // ----
+                    // mutexes
+                    // ----
                     WUPSConfigCategoryHandle mutexCatHandle;
                     WUPSConfigAPICreateCategoryOptionsV1 mutexCatOp = {.name = "Mutexes"};
 
