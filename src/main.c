@@ -172,6 +172,12 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         }
                     }
 
+                    char alarmCancelledText[30];
+                    snprintf(alarmCancelledText, 30, "Alarm Cancelled: %s", threads[i]->alarmCancelled ? "True" : "False");
+                    if (WUPSConfigItemStub_AddToCategory(catHandle, alarmCancelledText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                        DEBUG_FUNCTION_LINE_ERR("Failed to add alarm cancelled value of thread %d to its category", threads[i]->name);
+                    }
+
                     char exitValueText[20];
                     snprintf(exitValueText, 20, "Exit Value: %d", threads[i]->exitValue);
                     if (WUPSConfigItemStub_AddToCategory(catHandle, exitValueText) != WUPSCONFIG_API_RESULT_SUCCESS) {
