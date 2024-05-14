@@ -1,3 +1,4 @@
+#include "threadcategory.h"
 #include "utils/logger.h"
 #include <coreinit/fastmutex.h>
 #include <coreinit/interrupts.h>
