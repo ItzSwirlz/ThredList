@@ -176,9 +176,9 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
                 WUPSConfigAPI_Category_Create(mutexCatOp, &mutexCatHandle);
                 while (m) {
                     if (m->name != NULL) {
-                        WUPSConfigItemStub_AddToCategory(mutexCatHandle, "Unnamed Mutex");
-                    } else {
                         WUPSConfigItemStub_AddToCategory(mutexCatHandle, m->name);
+                    } else {
+                        WUPSConfigItemStub_AddToCategory(mutexCatHandle, "Unnamed Mutex");
                     }
                     m = m->link.next;
                 }
@@ -196,9 +196,9 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
                 WUPSConfigAPI_Category_Create(fastMutexCatOp, &fastMutexCatHandle);
                 while (fm) {
                     if (fm->name != NULL) {
-                        WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, "Unnamed Fast Mutex");
-                    } else {
                         WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, fm->name);
+                    } else {
+                        WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, "Unnamed Fast Mutex");
                     }
                     fm = fm->link.next;
                 }
