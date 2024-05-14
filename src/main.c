@@ -211,6 +211,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     // ----
                     // mutexes
                     // ----
+                    if(threads[i]->mutex) {
                     WUPSConfigCategoryHandle mutexCatHandle;
                     WUPSConfigAPICreateCategoryOptionsV1 mutexCatOp = {.name = "Mutexes"};
 
@@ -225,10 +226,11 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         m = m->link.next;
                     }
                     WUPSConfigAPI_Category_AddCategory(catHandle, mutexCatHandle);
-
+                    }
                     // ----
                     // fast mutexes
                     //
+                    if(threads[i]->fastMutex) {
                     WUPSConfigCategoryHandle fastMutexCatHandle;
                     WUPSConfigAPICreateCategoryOptionsV1 fastMutexCatOp = {.name = "Fast Mutexes"};
 
@@ -244,7 +246,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                         fm = fm->link.next;
                     }
                     WUPSConfigAPI_Category_AddCategory(catHandle, fastMutexCatHandle);
-
+                    }
 
                     if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
                         DEBUG_FUNCTION_LINE_ERR("Failed to add thread category %d to the list", threads[i]->name);
