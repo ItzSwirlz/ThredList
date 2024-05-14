@@ -102,13 +102,16 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
                 DEBUG_FUNCTION_LINE_ERR("Failed to add base priority of thread %d to its category", thread->name);
             }
 
-            // most threads probably have no tls sections so only show on ones have them
-            if (thread->tlsSectionCount) {
-                char tlsSectionText[20];
-                snprintf(tlsSectionText, 20, "TLS Sections: %d", thread->tlsSectionCount);
-                if (WUPSConfigItemStub_AddToCategory(catHandle, tlsSectionText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                    DEBUG_FUNCTION_LINE_ERR("Failed to add tls section count %d to its category", thread->name);
-                }
+            char wakeCountText[24];
+            snprintf(wakeCountText, 24, "Wake Count: %lld", thread->wakeCount);
+            if (WUPSConfigItemStub_AddToCategory(catHandle, wakeCountText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                DEBUG_FUNCTION_LINE_ERR("Failed to add wake count of thread %d to its category", thread->name);
+            }
+
+            char suspendCountText[24];
+            snprintf(suspendCountText, 24, "Suspend Count: %lld", thread->suspendCount);
+            if (WUPSConfigItemStub_AddToCategory(catHandle, suspendCountText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                DEBUG_FUNCTION_LINE_ERR("Failed to add suspend count of thread %d to its category", thread->name);
             }
 
             char alarmCancelledText[30];
@@ -121,12 +124,6 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             snprintf(exitValueText, 20, "Exit Value: %d", thread->exitValue);
             if (WUPSConfigItemStub_AddToCategory(catHandle, exitValueText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add exit value of thread %d to its category", thread->name);
-            }
-
-            char wakeCountText[24];
-            snprintf(wakeCountText, 24, "Wake Count: %lld", thread->wakeCount);
-            if (WUPSConfigItemStub_AddToCategory(catHandle, wakeCountText) != WUPSCONFIG_API_RESULT_SUCCESS) {
-                DEBUG_FUNCTION_LINE_ERR("Failed to add wake count of thread %d to its category", thread->name);
             }
 
             char unk0x610Text[25];
@@ -151,6 +148,15 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             snprintf(unk0x628Text, 25, "unk0x628: %lld", thread->unk0x628);
             if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x628Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x628 value of thread %lld to its category", thread->name);
+            }
+
+            // most threads probably have no tls sections so only show on ones have them
+            if (thread->tlsSectionCount) {
+                char tlsSectionText[20];
+                snprintf(tlsSectionText, 20, "TLS Sections: %d", thread->tlsSectionCount);
+                if (WUPSConfigItemStub_AddToCategory(catHandle, tlsSectionText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                    DEBUG_FUNCTION_LINE_ERR("Failed to add tls section count %d to its category", thread->name);
+                }
             }
 
             // ----
