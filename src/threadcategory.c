@@ -109,7 +109,7 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             }
 
             char suspendCountText[24];
-            snprintf(suspendCountText, 24, "Suspend Count: %lld", thread->suspendCount);
+            snprintf(suspendCountText, 24, "Suspend Count: %d", thread->suspendCounter);
             if (WUPSConfigItemStub_AddToCategory(catHandle, suspendCountText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add suspend count of thread %d to its category", thread->name);
             }
@@ -124,6 +124,12 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             snprintf(exitValueText, 20, "Exit Value: %d", thread->exitValue);
             if (WUPSConfigItemStub_AddToCategory(catHandle, exitValueText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add exit value of thread %d to its category", thread->name);
+            }
+
+            char suspendResultText[22];
+            snprintf(suspendResultText, 22, "Suspend Result: %d", thread->suspendResult);
+            if (WUPSConfigItemStub_AddToCategory(catHandle, suspendResultText) != WUPSCONFIG_API_RESULT_SUCCESS) {
+                DEBUG_FUNCTION_LINE_ERR("Failed to add suspend result of thread %d to its category", thread->name);
             }
 
             char unk0x610Text[25];
