@@ -65,7 +65,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
             if (threads[i]) {
                 if (threads[i]->name) {
                     WUPSConfigCategoryHandle catHandle;
-                    if(strcmp(threads[i]->name, "") == 0) {
+                    if (strcmp(threads[i]->name, "") == 0) {
                         threads[i]->name = "Unnamed Thread";
                     }
                     WUPSConfigAPICreateCategoryOptionsV1 catOp = {.name = threads[i]->name};
@@ -211,41 +211,41 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
                     // ----
                     // mutexes
                     // ----
-                    if(threads[i]->mutex) {
-                    WUPSConfigCategoryHandle mutexCatHandle;
-                    WUPSConfigAPICreateCategoryOptionsV1 mutexCatOp = {.name = "Mutexes"};
+                    if (threads[i]->mutex) {
+                        WUPSConfigCategoryHandle mutexCatHandle;
+                        WUPSConfigAPICreateCategoryOptionsV1 mutexCatOp = {.name = "Mutexes"};
 
-                    OSMutex *m = threads[i]->mutex;
-                    WUPSConfigAPI_Category_Create(mutexCatOp, &mutexCatHandle);
-                    while (m) {
-                        if (m->name != NULL) {
-                            WUPSConfigItemStub_AddToCategory(mutexCatHandle, "Unnamed Mutex");
-                        } else {
-                            WUPSConfigItemStub_AddToCategory(mutexCatHandle, m->name);
+                        OSMutex *m = threads[i]->mutex;
+                        WUPSConfigAPI_Category_Create(mutexCatOp, &mutexCatHandle);
+                        while (m) {
+                            if (m->name != NULL) {
+                                WUPSConfigItemStub_AddToCategory(mutexCatHandle, "Unnamed Mutex");
+                            } else {
+                                WUPSConfigItemStub_AddToCategory(mutexCatHandle, m->name);
+                            }
+                            m = m->link.next;
                         }
-                        m = m->link.next;
-                    }
-                    WUPSConfigAPI_Category_AddCategory(catHandle, mutexCatHandle);
+                        WUPSConfigAPI_Category_AddCategory(catHandle, mutexCatHandle);
                     }
                     // ----
                     // fast mutexes
                     //
-                    if(threads[i]->fastMutex) {
-                    WUPSConfigCategoryHandle fastMutexCatHandle;
-                    WUPSConfigAPICreateCategoryOptionsV1 fastMutexCatOp = {.name = "Fast Mutexes"};
+                    if (threads[i]->fastMutex) {
+                        WUPSConfigCategoryHandle fastMutexCatHandle;
+                        WUPSConfigAPICreateCategoryOptionsV1 fastMutexCatOp = {.name = "Fast Mutexes"};
 
 
-                    OSFastMutex *fm = threads[i]->fastMutex;
-                    WUPSConfigAPI_Category_Create(fastMutexCatOp, &fastMutexCatHandle);
-                    while (fm) {
-                        if (fm->name != NULL) {
-                            WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, "Unnamed Fast Mutex");
-                        } else {
-                            WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, fm->name);
+                        OSFastMutex *fm = threads[i]->fastMutex;
+                        WUPSConfigAPI_Category_Create(fastMutexCatOp, &fastMutexCatHandle);
+                        while (fm) {
+                            if (fm->name != NULL) {
+                                WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, "Unnamed Fast Mutex");
+                            } else {
+                                WUPSConfigItemStub_AddToCategory(fastMutexCatHandle, fm->name);
+                            }
+                            fm = fm->link.next;
                         }
-                        fm = fm->link.next;
-                    }
-                    WUPSConfigAPI_Category_AddCategory(catHandle, fastMutexCatHandle);
+                        WUPSConfigAPI_Category_AddCategory(catHandle, fastMutexCatHandle);
                     }
 
                     if (WUPSConfigAPI_Category_AddCategory(root, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
