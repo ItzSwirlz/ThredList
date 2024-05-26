@@ -32,13 +32,8 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
         }
 
         OSThread *threads[sizeThreads];
-        // WUPSConfigCategoryHandle categoryHandles[sizeThreads];
-        // WUPSConfigAPICreateCategoryOptionsV1 categoryOptions[sizeThreads];
-        OSThread *curThread = OSGetCurrentThread();
-        int state           = OSDisableInterrupts();
         int i               = 0;
 
-        __OSLockScheduler(curThread);
         OSThread *t = *((OSThread **) 0x100567F8); // active threadlist address
         if (t == NULL) {
             DEBUG_FUNCTION_LINE_ERR("The first thread obtained was NULL. This should never happen.");
@@ -49,6 +44,9 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
         // Since the scheduler is locked and interrupts are disabled, to save time,
         // have a local array pointing to these threads instead of making new ones
         // and holding up the system
+        OSThread *curThread = OSGetCurrentThread();
+        int state           = OSDisableInterrupts();
+        __OSLockScheduler(curThread);
         while (t && i < sizeThreads) {
             threads[i] = t;
             t          = t->activeLink.next;
