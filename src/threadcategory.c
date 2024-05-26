@@ -14,19 +14,19 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
                 return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
-            char typeText[30];
+            char typeText[20];
             switch (thread->type) {
                 case OS_THREAD_TYPE_DRIVER:
-                    snprintf(typeText, 30, "Type: Driver");
+                    snprintf(typeText, 20, "Type: Driver");
                     break;
                 case OS_THREAD_TYPE_IO:
-                    snprintf(typeText, 30, "Type: I/O");
+                    snprintf(typeText, 20, "Type: I/O");
                     break;
                 case OS_THREAD_TYPE_APP:
-                    snprintf(typeText, 30, "Type: App");
+                    snprintf(typeText, 20, "Type: App");
                     break;
                 default:
-                    snprintf(typeText, 30, "Type Undefined: %d", thread->type);
+                    snprintf(typeText, 20, "Type Undefined: %d", thread->type);
                     break;
             }
             if (WUPSConfigItemStub_AddToCategory(catHandle, typeText) != WUPSCONFIG_API_RESULT_SUCCESS) {
@@ -34,64 +34,64 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             }
 
 
-            char attrText[30];
+            char attrText[26];
             switch (thread->attr) {
                 case OS_THREAD_ATTRIB_AFFINITY_CPU0:
-                    snprintf(attrText, 30, "Attribute: Affinity CPU 0");
+                    snprintf(attrText, 26, "Attribute: Affinity CPU 0");
                     break;
                 case OS_THREAD_ATTRIB_AFFINITY_CPU1:
-                    snprintf(attrText, 30, "Attribute: Affinity CPU 1");
+                    snprintf(attrText, 26, "Attribute: Affinity CPU 1");
                     break;
                 case OS_THREAD_ATTRIB_AFFINITY_CPU2:
-                    snprintf(attrText, 30, "Attribute: Affinity CPU 2");
+                    snprintf(attrText, 26, "Attribute: Affinity CPU 2");
                     break;
                 case OS_THREAD_ATTRIB_AFFINITY_ANY:
-                    snprintf(attrText, 30, "Attribute: Affinity Any");
+                    snprintf(attrText, 26, "Attribute: Affinity Any");
                     break;
                 case OS_THREAD_ATTRIB_DETACHED:
-                    snprintf(attrText, 30, "Attribute: Detached");
+                    snprintf(attrText, 26, "Attribute: Detached");
                     break;
                 case OS_THREAD_ATTRIB_STACK_USAGE:
-                    snprintf(attrText, 30, "Attribute: Stack Usage");
+                    snprintf(attrText, 26, "Attribute: Stack Usage");
                     break;
                 case OS_THREAD_ATTRIB_UNKNOWN:
-                    snprintf(attrText, 30, "Attribute: Unknown");
+                    snprintf(attrText, 26, "Attribute: Unknown");
                     break;
                 default:
-                    snprintf(attrText, 30, "Attribute Undefined: %d", thread->attr);
+                    snprintf(attrText, 26, "Attribute Undefined: %d", thread->attr);
                     break;
             }
             if (WUPSConfigItemStub_AddToCategory(catHandle, attrText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add attributes of thread %d to its category", thread->name);
             }
 
-            char stateText[50];
+            char stateText[35];
             switch (thread->state) {
                 case OS_THREAD_STATE_NONE:
-                    snprintf(stateText, 50, "State: None");
+                    snprintf(stateText, 35, "State: None");
                     break;
                 case OS_THREAD_STATE_READY:
-                    snprintf(stateText, 50, "State: Ready");
+                    snprintf(stateText, 35, "State: Ready");
                     break;
                 case OS_THREAD_STATE_RUNNING:
-                    snprintf(stateText, 50, "State: Running");
+                    snprintf(stateText, 35, "State: Running");
                     break;
                 case OS_THREAD_STATE_WAITING:
-                    snprintf(stateText, 50, "State: Waiting (Probably bc WUPS is active)");
+                    snprintf(stateText, 35, "State: Waiting (this is expected)");
                     break;
                 case OS_THREAD_STATE_MORIBUND:
-                    snprintf(stateText, 50, "State: Moribund");
+                    snprintf(stateText, 35, "State: Moribund");
                     break;
                 default:
-                    snprintf(stateText, 50, "State Undefined: %d", thread->state);
+                    snprintf(stateText, 35, "State Undefined: %d", thread->state);
                     break;
             }
             if (WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add state of thread %d to its category", thread->name);
             }
 
-            char priorityText[20];
-            snprintf(priorityText, 20, "Priority: %d", thread->priority);
+            char priorityText[15];
+            snprintf(priorityText, 15, "Priority: %d", thread->priority);
             if (WUPSConfigItemStub_AddToCategory(catHandle, priorityText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add priority of thread %d to its category", thread->name);
             }
@@ -114,14 +114,14 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
                 DEBUG_FUNCTION_LINE_ERR("Failed to add suspend count of thread %d to its category", thread->name);
             }
 
-            char alarmCancelledText[30];
-            snprintf(alarmCancelledText, 30, "Alarm Cancelled: %s", thread->alarmCancelled ? "True" : "False");
+            char alarmCancelledText[25];
+            snprintf(alarmCancelledText, 25, "Alarm Cancelled: %s", thread->alarmCancelled ? "True" : "False");
             if (WUPSConfigItemStub_AddToCategory(catHandle, alarmCancelledText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add alarm cancelled value of thread %d to its category", thread->name);
             }
 
-            char exitValueText[20];
-            snprintf(exitValueText, 20, "Exit Value: %d", thread->exitValue);
+            char exitValueText[16];
+            snprintf(exitValueText, 16, "Exit Value: %d", thread->exitValue);
             if (WUPSConfigItemStub_AddToCategory(catHandle, exitValueText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add exit value of thread %d to its category", thread->name);
             }
@@ -168,11 +168,17 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             // ----
             // mutexes
             // ----
-            if (thread->mutex) {
+            if (thread->mutex != NULL || thread->mutexQueue.head != NULL) {
                 WUPSConfigCategoryHandle mutexCatHandle;
                 WUPSConfigAPICreateCategoryOptionsV1 mutexCatOp = {.name = "Mutexes"};
 
-                OSMutex *m = thread->mutex;
+
+                OSMutex *m;
+                if(thread->mutex != NULL) {
+                    m = thread->mutex;
+                } else {
+                    m = thread->mutexQueue.head;
+                }
                 WUPSConfigAPI_Category_Create(mutexCatOp, &mutexCatHandle);
                 while (m) {
                     if (m->name != NULL) {
@@ -187,12 +193,17 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             // ----
             // fast mutexes
             //
-            if (thread->fastMutex) {
+            if (thread->fastMutex != NULL || thread->fastMutexQueue.head != NULL) {
                 WUPSConfigCategoryHandle fastMutexCatHandle;
                 WUPSConfigAPICreateCategoryOptionsV1 fastMutexCatOp = {.name = "Fast Mutexes"};
 
 
-                OSFastMutex *fm = thread->fastMutex;
+                OSFastMutex *fm;
+                if(thread->fastMutex != NULL) {
+                    fm = thread->fastMutex;
+                } else {
+                    fm = thread->fastMutexQueue.head;
+                }
                 WUPSConfigAPI_Category_Create(fastMutexCatOp, &fastMutexCatHandle);
                 while (fm) {
                     if (fm->name != NULL) {
