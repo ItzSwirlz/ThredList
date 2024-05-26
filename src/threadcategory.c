@@ -31,6 +31,7 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             }
             if (WUPSConfigItemStub_AddToCategory(catHandle, typeText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add type of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
 
@@ -63,6 +64,7 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             }
             if (WUPSConfigItemStub_AddToCategory(catHandle, attrText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add attributes of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char stateText[35];
@@ -88,72 +90,84 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             }
             if (WUPSConfigItemStub_AddToCategory(catHandle, stateText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add state of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char priorityText[15];
             snprintf(priorityText, 15, "Priority: %d", thread->priority);
             if (WUPSConfigItemStub_AddToCategory(catHandle, priorityText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add priority of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char basePriorityText[20];
             snprintf(basePriorityText, 20, "Base Priority: %d", thread->basePriority);
             if (WUPSConfigItemStub_AddToCategory(catHandle, basePriorityText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add base priority of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char wakeCountText[24];
             snprintf(wakeCountText, 24, "Wake Count: %lld", thread->wakeCount);
             if (WUPSConfigItemStub_AddToCategory(catHandle, wakeCountText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add wake count of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char suspendCountText[24];
             snprintf(suspendCountText, 24, "Suspend Count: %d", thread->suspendCounter);
             if (WUPSConfigItemStub_AddToCategory(catHandle, suspendCountText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add suspend count of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char alarmCancelledText[25];
             snprintf(alarmCancelledText, 25, "Alarm Cancelled: %s", thread->alarmCancelled ? "True" : "False");
             if (WUPSConfigItemStub_AddToCategory(catHandle, alarmCancelledText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add alarm cancelled value of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char exitValueText[16];
             snprintf(exitValueText, 16, "Exit Value: %d", thread->exitValue);
             if (WUPSConfigItemStub_AddToCategory(catHandle, exitValueText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add exit value of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char suspendResultText[22];
             snprintf(suspendResultText, 22, "Suspend Result: %d", thread->suspendResult);
             if (WUPSConfigItemStub_AddToCategory(catHandle, suspendResultText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add suspend result of thread %d to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char unk0x610Text[25];
             snprintf(unk0x610Text, 25, "unk0x610: %lld", thread->unk0x610);
             if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x610Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x610 value of thread %lld to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char unk0x618Text[25];
             snprintf(unk0x618Text, 25, "unk0x618: %lld", thread->unk0x618);
             if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x618Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x618 value of thread %lld to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char unk0x620Text[25];
             snprintf(unk0x620Text, 25, "unk0x620: %lld", thread->unk0x620);
             if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x620Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x620 value of thread %lld to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             char unk0x628Text[25];
             snprintf(unk0x628Text, 25, "unk0x628: %lld", thread->unk0x628);
             if (WUPSConfigItemStub_AddToCategory(catHandle, unk0x628Text) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add unk0x628 value of thread %lld to its category", thread->name);
+                return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
 
             // most threads probably have no tls sections so only show on ones have them
@@ -162,6 +176,7 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
                 snprintf(tlsSectionText, 20, "TLS Sections: %d", thread->tlsSectionCount);
                 if (WUPSConfigItemStub_AddToCategory(catHandle, tlsSectionText) != WUPSCONFIG_API_RESULT_SUCCESS) {
                     DEBUG_FUNCTION_LINE_ERR("Failed to add tls section count %d to its category", thread->name);
+                    return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
                 }
             }
 
