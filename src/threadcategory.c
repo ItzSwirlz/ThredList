@@ -183,13 +183,18 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             // ----
             // mutexes
             // ----
+            // These appear to always be null whenever we look for them for whatever reason.
+            // I'm not sure why. Probably because when we gather all the threads the scheduler
+            // is paused, and so is most of execution whenever the WUPS config menu is opened.
+            // But if for some reason there is a mutex running, show what we can.
+            // It may make sense to have a kernel module or something if we want to see mutex data.
             if (thread->mutex != NULL || thread->mutexQueue.head != NULL) {
                 WUPSConfigCategoryHandle mutexCatHandle;
                 WUPSConfigAPICreateCategoryOptionsV1 mutexCatOp = {.name = "Mutexes"};
 
 
                 OSMutex *m;
-                if(thread->mutex != NULL) {
+                if (thread->mutex != NULL) {
                     m = thread->mutex;
                 } else {
                     m = thread->mutexQueue.head;
@@ -208,13 +213,18 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
             // ----
             // fast mutexes
             //
+            // These appear to always be null whenever we look for them for whatever reason.
+            // I'm not sure why. Probably because when we gather all the threads the scheduler
+            // is paused, and so is most of execution whenever the WUPS config menu is opened.
+            // But if for some reason there is a fast mutex running, show what we can.
+            // It may make sense to have a kernel module or something if we want to see fast mutex data.
             if (thread->fastMutex != NULL || thread->fastMutexQueue.head != NULL) {
                 WUPSConfigCategoryHandle fastMutexCatHandle;
                 WUPSConfigAPICreateCategoryOptionsV1 fastMutexCatOp = {.name = "Fast Mutexes"};
 
 
                 OSFastMutex *fm;
-                if(thread->fastMutex != NULL) {
+                if (thread->fastMutex != NULL) {
                     fm = thread->fastMutex;
                 } else {
                     fm = thread->fastMutexQueue.head;

@@ -32,7 +32,7 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
         }
 
         OSThread *threads[sizeThreads];
-        int i               = 0;
+        int i = 0;
 
         OSThread *t = *((OSThread **) 0x100567F8); // active threadlist address
         if (t == NULL) {
@@ -55,13 +55,20 @@ WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle ro
         __OSUnlockScheduler(curThread);
         OSRestoreInterrupts(state);
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+
+        // this will probably be initialized and shouldn't matter, so override the compiler warning
+        // if(null) is basically what this is, threads[0] given the above code should be NULL
+        // if the first thread obtained actually was NULL.
         if (!threads[0]) {
             DEBUG_FUNCTION_LINE_ERR("The first thread obtained was NULL. This should never happen.");
             return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
         }
+#pragma GCC diagnostic pop
 
         for (int i = 0; i < sizeThreads; i++) {
-            if (ThredListCreateThreadCategory(root, threads[i]) != WUPSCONFIG_API_RESULT_SUCCESS) {
+            if (ThredListCreateThreadCategory(root, threads[i]) != WUPSCONFIG_API_CALLBACK_RESULT_SUCCESS) {
                 return WUPSCONFIG_API_CALLBACK_RESULT_ERROR;
             }
         }
