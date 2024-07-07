@@ -8,5 +8,6 @@
 #include <string.h>
 #include <wups.h>
 #include <wups/config/WUPSConfigItemStub.h>
+#include <wups/config/WUPSConfigItemBoolean.h>
 
 WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHandle rootHandle, OSThread *thread);

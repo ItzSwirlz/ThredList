@@ -1,6 +1,20 @@
 #include "threadcategory.h"
 
+OSThread* curr = NULL;
+
+void cancelThreadValueChanged(ConfigItemBoolean *item, bool newValue) {
+    OSCancelThread(curr);
+
+    // terminated once OSTestThreadCancel is called
+    OSTestThreadCancel(curr);
+}
+
+void continueThreadValueChanged(ConfigItemBoolean *item, bool newValue) {
+    OSContinueThread(curr);
+}
+
 WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHandle rootHandle, OSThread *thread) {
+    curr = thread;
     if (thread) {
         if (thread->name) {
             WUPSConfigCategoryHandle catHandle;
@@ -240,6 +254,14 @@ WUPSConfigAPICallbackStatus ThredListCreateThreadCategory(WUPSConfigCategoryHand
                 }
                 WUPSConfigAPI_Category_AddCategory(catHandle, fastMutexCatHandle);
             }
+
+            WUPSConfigCategoryHandle manageHandle;
+            WUPSConfigAPICreateCategoryOptionsV1 manageHandleCatOp = {.name = "Manage Thread (do with caution!)"};
+
+            WUPSConfigAPI_Category_Create(manageHandleCatOp, &manageHandle);
+            WUPSConfigItemBoolean_AddToCategory(manageHandle, "Cancel", "Send Cancel Signal", false, false, &cancelThreadValueChanged);
+            WUPSConfigItemBoolean_AddToCategory(manageHandle, "Continue", "Send Continue Signal", false, false, &continueThreadValueChanged);
+            WUPSConfigAPI_Category_AddCategory(catHandle, manageHandle);
 
             if (WUPSConfigAPI_Category_AddCategory(rootHandle, catHandle) != WUPSCONFIG_API_RESULT_SUCCESS) {
                 DEBUG_FUNCTION_LINE_ERR("Failed to add thread category %d to the list", thread->name);
